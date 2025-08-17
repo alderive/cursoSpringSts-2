@@ -1,5 +1,6 @@
 package com.curso.spring.services;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,11 +79,14 @@ public class ServiceUserImpl implements ServiceUser {
 	 */  
 	 @Override
 	 public List<User> getAllUser() throws Exception {
-		return repo.findAll();
+		 
+		 List<User> lista = repo.findAll();
+		return lista;
 	 }
 
 	 @Override
 	 public User updateUser(Integer id, User updatedUser) throws EntityNotFoundException, Exception {
+		 
 		 Optional<User> optionalUser = repo.findById(id);
 
 		    if (optionalUser.isPresent()) {

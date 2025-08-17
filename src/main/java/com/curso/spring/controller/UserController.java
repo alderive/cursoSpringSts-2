@@ -1,7 +1,9 @@
 package com.curso.spring.controller;
 
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,16 +97,19 @@ ServiceUser service;
 	    public ResponseEntity<ApiResponse> getAllUsers() {
 			ApiResponse response = new ApiResponse();
 			Map<String, Object> retorno = new HashMap<>();
+			List<User> lista = Collections.emptyList();
+
 			try {
 				
 				retorno.put("Estatus", 201);
-				retorno.put("Mensaje", "Usuario obtenido correctamente");
-				retorno.put("Data", service.getAllUser());
+				retorno.put("Mensaje", "Usuarios obtenidos correctamente");
+				lista = service.getAllUser();
+				retorno.put("Data",lista );
 				response.setUserMap(retorno);
 			} catch (Exception e) {
 				retorno.put("Estatus", 500);
-				retorno.put("Mensaje", e.getCause());
-				retorno.put("Data", null);
+				retorno.put("Mensaje", e.getMessage());
+				retorno.put("Data", "No Data");
 			}
 	        response.setUserMap(retorno);
 	        return ResponseEntity.badRequest().body(response);
@@ -123,7 +128,7 @@ ServiceUser service;
 				retorno.put("Data", id);				
 			} catch (Exception e) {
 				retorno.put("Estatus", 500);
-				retorno.put("Mensaje", e.getCause());
+				retorno.put("Mensaje", "Error al eliminar");
 				retorno.put("Data", null);
 			}
 	        response.setUserMap(retorno);
@@ -136,7 +141,7 @@ ServiceUser service;
 		 	ApiResponse response = new ApiResponse();
 			Map<String, Object> retorno = new HashMap<>();
 	        try {
-				service.updateUser(id, user);
+  				service.updateUser(id, user);
 				retorno.put("Estatus", 201);
 				retorno.put("Mensaje", "Usuario actualizado correctamente");
 				retorno.put("Data", user);				
@@ -146,7 +151,7 @@ ServiceUser service;
 				retorno.put("Data", null);
 			} catch (Exception e) {
 				retorno.put("Estatus", 500);
-				retorno.put("Mensaje", e.getCause());
+				retorno.put("Mensaje", "Falla inesperada");
 				retorno.put("Data", null);
 			}
 	        response.setUserMap(retorno);
@@ -154,6 +159,9 @@ ServiceUser service;
 	    }
 		
 		
+		
+	
+
 
 
 }
